@@ -105,11 +105,64 @@ void loop(){
   }
   pixels2.show();
   
+  
+  
+  
   // right tam
+     int r1 ;
+     int g1 ;
+     int b1 ;
+     int H1 ;
+     int S1 ;
+     int BB1 ;
+
+     
+      H1 = 0 ;
+      BB1 = brt1 ;
+    if(brt1 < 100){
+      S1 = brt1 ;
+    }else if(brt1 <155){
+      S1 = 100 ;
+    }else{
+      S1 = - brt1 + 255 ;
+    }
+
+    int max=BB1;
+    int min=max-S1*max/255;
+    int hue=H1;
+
+	if(hue<60){
+	   r1=max;
+	   g1=min+hue*(max-min)/60;
+	   b1=min;
+	}else if(hue<120){
+	  r1=max-(hue-60)*(max-min)/60;
+	  g1=max;
+	  b1=min;
+	}else if(hue<180){
+	  r1=min;
+	  g1=max;
+	  b1=min+(hue-120)*(max-min)/60;
+	}else if(hue<240){
+	  r1=min;
+	  g1=max-(hue-180)*(max-min)/60;
+	  b1=max;
+	}else if(hue<300){
+	  r1=min+(hue-240)*(max-min)/60;
+	  g1=min;
+	  b1=max;
+	}else{		//hue<360
+	  r1=max;
+	  g1=min;
+	b1=max-(hue-300)*(max-min)/60;
+	}
+
   for(int i=0;i<10;i++){
-    pixels1.setPixelColor(i, pixels2.Color(brt1,brt1,brt1));
+    pixels1.setPixelColor(i, pixels1.Color(r1,g1,b1));
   }
   pixels1.show();
-
-
 }
+
+
+
+
