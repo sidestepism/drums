@@ -29,9 +29,9 @@ public class CMain : MonoBehaviour {
 		GameObject baseDrumObject = GameObject.Find("BassDrumParticleSystem");
 		baseDrumParticleEmitter = baseDrumObject.GetComponent<ParticleSystem> ();
 		GameObject leftTamObject = GameObject.Find("LeftTamParticleSystem");
-		leftTamParticleEmitter = baseDrumObject.GetComponent<ParticleSystem> ();
+		leftTamParticleEmitter = leftTamObject.GetComponent<ParticleSystem> ();
 		GameObject cymbalObject = GameObject.Find("CymbalParticleSystem");
-		cymbalParticleEmitter = baseDrumObject.GetComponent<ParticleSystem> ();
+		cymbalParticleEmitter = cymbalObject.GetComponent<ParticleSystem> ();
 
 		socket = new SocketIOClient.Client("http://127.0.0.1:8000");
 		socket.On("connect", (fn) => {
@@ -61,6 +61,14 @@ public class CMain : MonoBehaviour {
 			Debug.Log (intensity);
 			baseDrumIntensity  = intensity;
 		});
+
+		socket.On("cymbal", (data) => {
+			Debug.Log (data.Json.ToJsonString());
+			int intensity = data.Json.GetFirstArgAs<int>();
+			Debug.Log (intensity);
+			cymbalIntensity = intensity;
+		});
+
 		socket.Error += (sender, e) => {
 			Debug.Log ("socket Error: " + e.Message.ToString ());
 		};
